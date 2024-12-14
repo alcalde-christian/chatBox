@@ -87,13 +87,15 @@ const closeChat = document.getElementById("closeChat")
 
 closeChat.addEventListener("click", e => {
     socket.emit("closedChat", {user: user})
-    socket.disconect()
     const messages = document.getElementById("messages")
     messages.innerHTML += `
         <p class="closeTag">
             -- Se ha finalizado la comunicación --
         </p>
     `
+    socket.disconnect()
+    socket.off("messages")
+    socket.off("newUser")
 })
 
 socket.on("closedChat", data => {
