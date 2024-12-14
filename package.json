@@ -1,6 +1,6 @@
 {
   "name": "proyecto_chatbox",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Proyecto en clase para la creación de un chat mediante websockets",
   "main": "app.js",
   "type": "module",
