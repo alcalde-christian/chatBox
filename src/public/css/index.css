@@ -1,0 +1,13 @@
+h1 {
+    margin: 0;
+    text-align: center;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.closeTag {
+    color: red;
+}

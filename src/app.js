@@ -7,12 +7,8 @@ import { Server } from "socket.io"
 
 // Declaración de express y asignación de puerto.
 const app = express()
-const PORT = 8080
+const PORT = process.env.PORT || 8090
 const httpServer = app.listen(PORT, () => console.log(`Escuchando en el puerto: ${PORT}`))
-
-
-// Configuración de socket
-const io = new Server(httpServer)
 
 
 // Configuración de la carpeta "public"
@@ -40,7 +36,23 @@ app.get("/ping", (req, res) => {
 app.use("/", viewsRoutes)
 
 
+// Configuración de socket
+const io = new Server(httpServer)
+
+const messages = []
+
 // Canal de comunicación mediante sockets
 io.on("connection", socket => {
+    socket.on("message", data => {
+        messages.push(data)
+        io.emit("messages", messages)
+    })
 
+    socket.on("userConnected", data => {
+        socket.broadcast.emit("newUser", data.user)
+    })
+
+    socket.on("closedChat", data => {
+        socket.broadcast.emit("closedChat", data.user)
+    })
 })
